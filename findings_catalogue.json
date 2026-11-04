@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.7",
+  "tool": "anvil",
+  "entries": [
+    {
+      "id": "ANVIL-PROC-001",
+      "title": "Root shell with listener/reverse-shell heuristics (PID {pid})",
+      "source_tools": ["anvil"],
+      "risk": "HIGH",
+      "description": "A process running as root has command-line indicators of a listening or reverse shell.",
+      "impact": "If this is unauthorised it is a likely backdoor providing persistent root access; if authorised it is a maintenance task and can be marked false-positive after verification.",
+      "cwe": ["CWE-78"],
+      "cvss_v3_base": 7.8,
+      "mitre_attack": [{"technique": "T1059.004", "tactic": "Execution", "name": "Unix Shell"}],
+      "remediation_brief": "Verify the process; if unauthorised, kill it (kill -9 <pid>) and investigate parent process tree for persistence.",
+      "remediation_component": "Application",
+      "remediation_category": "Access Control",
+      "remediation_effort": "Easy"
+    },
+    {
+      "id": "ANVIL-NET-010",
+      "title": "High-risk service listening as root on port {port}",
+      "source_tools": ["anvil"],
+      "risk": "MEDIUM",
+      "description": "A historically-exploitable service is listening as root.",
+      "impact": "Compromise of the service results in root execution. Specifically risky for FTP/Telnet (cleartext), NFS, RDBMS, Redis/MongoDB/Memcached (frequently misconfigured), and Elasticsearch (historical default no-auth).",
+      "cwe": ["CWE-250"],
+      "cvss_v3_base": 5.5,
+      "remediation_brief": "Run the service as a non-root user; bind to loopback only when not externally needed; confirm authentication and firewall rules.",
+      "remediation_component": "Configuration",
+      "remediation_category": "Access Control",
+      "remediation_effort": "Moderate"
+    },
+    {
+      "id": "ANVIL-SUID-001",
+      "title": "Setuid binary not owned by root: {path}",
+      "source_tools": ["anvil"],
+      "risk": "HIGH",
+      "description": "A setuid binary is owned by a non-root user.",
+      "impact": "Compromising the file owner allows arbitrary modification of the binary, which then executes with the owner's UID (and any setuid escalation it performs) on the next invocation. Classic local-privesc pattern.",
+      "cwe": ["CWE-732"],
+      "cvss_v3_base": 7.8,
+      "mitre_attack": [{"technique": "T1548.001", "tactic": "Privilege Escalation", "name": "Setuid and Setgid"}],
+      "remediation_brief": "chown root:root <path> + audit why the binary is setuid; remove suid bit if not strictly required (chmod u-s).",
+      "remediation_effort": "Easy",
+      "remediation_component": "Configuration",
+      "remediation_category": "Access Control"
+    }
+  ]
+}
