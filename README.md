@@ -45,6 +45,9 @@ Security testing is a professional discipline with significant ethical and legal
 
 # Anvil — Process State Sweep (PSS)
 
+> [!CAUTION]
+> **Under Development — Untested.** This tool has not been validated in production engagements. Features may be incomplete, unstable, or produce unreliable results. Do not rely on its output for deliverables without independent verification.
+
 Anvil takes a forensic-style snapshot of the local host's process,
 socket, kernel-module, and setuid state and flags common indicators
 of compromise or misconfiguration.
