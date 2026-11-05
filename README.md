@@ -52,6 +52,9 @@ Anvil takes a forensic-style snapshot of the local host's process,
 socket, kernel-module, and setuid state and flags common indicators
 of compromise or misconfiguration.
 
+
+> **[View full documentation on the Codex Wiki](https://wiki.pr0t31n.com/tools/anvil)** — detailed features, CLI reference, findings catalogue, and integration guides.
+
 ## Coverage (v0.3.0)
 
 | Phase     | Source                | Detects |
