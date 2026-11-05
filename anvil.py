@@ -10,11 +10,11 @@ Local host snapshot:
     unsigned binaries on macOS, processes running as root that listen on
     high-risk ports, etc.)
 
-Token protocol (when ANVIL_MANAGED=1):
-  __VANTAGE_LOG__     <message>
-  __VANTAGE_ERR__     <message>
-  __VANTAGE_STATUS__  <json>
-  __VANTAGE_FINDING__ <json>
+Token protocol (when CRUCIBLE_MANAGED=1):
+  __CRUCIBLE_LOG__     <message>
+  __CRUCIBLE_ERR__     <message>
+  __CRUCIBLE_STATUS__  <json>
+  __CRUCIBLE_FINDING__ <json>
 """
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ try:
 except ImportError:
     _el = None
 
-_MANAGED = os.environ.get("ANVIL_MANAGED", "") == "1"
+_MANAGED = os.environ.get("CRUCIBLE_MANAGED", "") == "1"
 _findings: list = []
 
 _fdb = None
@@ -100,21 +100,21 @@ def _tok(token: str, msg: str) -> None:
 
 
 def log(msg: str) -> None:
-    _tok("__VANTAGE_LOG__", msg)
+    _tok("__CRUCIBLE_LOG__", msg)
     if _RUNLOG is not None:
         try: _RUNLOG.info(msg)
         except Exception: pass
 
 
 def err(msg: str) -> None:
-    _tok("__VANTAGE_ERR__", msg)
+    _tok("__CRUCIBLE_ERR__", msg)
     if _RUNLOG is not None:
         try: _RUNLOG.error(msg)
         except Exception: pass
 
 
 def status(phase: str, label: str, state: str, step: str = "") -> None:
-    _tok("__VANTAGE_STATUS__",
+    _tok("__CRUCIBLE_STATUS__",
          json.dumps({"phase": phase, "label": label, "state": state, "step": step}))
 
 
@@ -157,7 +157,7 @@ def finding(*, title: str, severity: str, description: str,
             _fdb.insert_finding(rec)
         except Exception:
             pass
-    _tok("__VANTAGE_FINDING__", json.dumps(rec))
+    _tok("__CRUCIBLE_FINDING__", json.dumps(rec))
     _flush_findings()
 
 

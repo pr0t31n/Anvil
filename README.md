@@ -109,4 +109,4 @@ run-dir-relative (§14i).
 
 ## Token protocol
 
-Set `ANVIL_MANAGED=1` for `__VANTAGE_*` token output.
+Set `CRUCIBLE_MANAGED=1` for `__CRUCIBLE_*` token output.
