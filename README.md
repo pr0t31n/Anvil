@@ -77,6 +77,17 @@ of compromise or misconfiguration.
 python3 install.py
 ```
 
+## CLI Reference
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--client-short SHORT` | `default` | Short client identifier used in output directory naming |
+| `--client-name NAME` | (same as `--client-short`) | Full client name written to `meta.json` |
+| `--engagement-name NAME` | `anvil run` | Engagement name written to `meta.json` |
+| `--project DIR` | (auto-generated) | Override the project output directory path |
+| `--skip-setuid` | off | Skip the setuid binary scan (faster on machines with many mounted filesystems) |
+| `--version` | — | Print the current version and exit |
+
 ## Usage
 
 ```bash
@@ -85,6 +96,12 @@ sudo python3 anvil.py
 
 # Skip the setuid scan (faster on machines with many filesystems mounted)
 sudo python3 anvil.py --skip-setuid
+
+# Specify client and engagement metadata
+sudo python3 anvil.py --client-short acme --client-name "Acme Corp" --engagement-name "Q4 2026 Audit"
+
+# Write output to a specific directory
+sudo python3 anvil.py --project /path/to/output
 ```
 
 ## Output
